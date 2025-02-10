@@ -2,10 +2,13 @@ package service
 
 import (
 	"bytes"
-	"crypto/sha256"
+	"crypto/sha256" // if needed elsewhere
 	"strconv"
 	"time"
 )
+
+// Global blockchain instance for API access
+var BlockchainInstance = NewBlockchain()
 
 type Block struct {
 	Timestamp     int64
@@ -15,7 +18,7 @@ type Block struct {
 }
 
 type Blockchain struct {
-	Blocks []*Block 
+	Blocks []*Block
 }
 
 func NewGenesisBlock() *Block {
@@ -23,14 +26,13 @@ func NewGenesisBlock() *Block {
 }
 
 func NewBlockchain() *Blockchain {
-	return &Blockchain{Blocks: []*Block{NewGenesisBlock()}} 
+	return &Blockchain{Blocks: []*Block{NewGenesisBlock()}}
 }
 
 func (b *Block) SetHash() {
 	timestamp := []byte(strconv.FormatInt(b.Timestamp, 10))
 	headers := bytes.Join([][]byte{b.PrevBlockHash, b.Data, timestamp}, []byte{})
 	hash := sha256.Sum256(headers)
-
 	b.Hash = hash[:]
 }
 
@@ -41,7 +43,9 @@ func NewBlock(data string, prevBlockHash []byte) *Block {
 }
 
 func (bc *Blockchain) AddBlock(data string) {
-	prevBlock := bc.Blocks[len(bc.Blocks)-1] 
+	prevBlock := bc.Blocks[len(bc.Blocks)-1]
 	newBlock := NewBlock(data, prevBlock.Hash)
-	bc.Blocks = append(bc.Blocks, newBlock) 
+	bc.Blocks = append(bc.Blocks, newBlock)
 }
+
+// Removed broken getBlocks function.

@@ -1,20 +1,16 @@
 package main
 
 import (
+	"Blockchain/internal/API"
 	"Blockchain/internal/service"
-	"fmt"
 )
 
 func main() {
-	bc := service.NewBlockchain() 
-
+	// Populate the blockchain with sample blocks.
+	bc := service.BlockchainInstance
 	bc.AddBlock("Send 1 BTC to Ivan")
 	bc.AddBlock("Send 2 more BTC to Ivan")
 
-	for _, block := range bc.Blocks { 
-		fmt.Printf("Prev. Hash: %x\n", block.PrevBlockHash)
-		fmt.Printf("Data: %s\n", block.Data)
-		fmt.Printf("Hash: %x\n", block.Hash)
-		fmt.Println()
-	}
+	// Start the server to listen for requests continuously.
+	API.Run()
 }
