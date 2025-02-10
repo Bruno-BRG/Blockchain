@@ -15,7 +15,7 @@ type Block struct {
 }
 
 type Blockchain struct {
-	Blocks []*Block // changed field name from blocks to Blocks
+	Blocks []*Block 
 }
 
 func NewGenesisBlock() *Block {
@@ -23,7 +23,7 @@ func NewGenesisBlock() *Block {
 }
 
 func NewBlockchain() *Blockchain {
-	return &Blockchain{Blocks: []*Block{NewGenesisBlock()}} // updated field usage
+	return &Blockchain{Blocks: []*Block{NewGenesisBlock()}} 
 }
 
 func (b *Block) SetHash() {
@@ -41,7 +41,7 @@ func NewBlock(data string, prevBlockHash []byte) *Block {
 }
 
 func (bc *Blockchain) AddBlock(data string) {
-	prevBlock := bc.Blocks[len(bc.Blocks)-1] // updated field usage
+	prevBlock := bc.Blocks[len(bc.Blocks)-1] 
 	newBlock := NewBlock(data, prevBlock.Hash)
-	bc.Blocks = append(bc.Blocks, newBlock) // updated field usage
+	bc.Blocks = append(bc.Blocks, newBlock) 
 }
